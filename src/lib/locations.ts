@@ -1,13 +1,13 @@
 import locationsData from '@/data/locations.json';
-import type { Location, CityLocations } from '@/types/guide';
+import type { Location, LocationData, CityLocations } from '@/types/guide';
 
 // 类型断言
 const locations = locationsData as CityLocations;
 
 /**
- * 获取指定城市的所有景点位置
+ * 获取指定城市的所有景点位置(原始数据,不含name字段)
  */
-export function getCityLocations(citySlug: string): Record<string, Location> {
+export function getCityLocations(citySlug: string): Record<string, LocationData> {
   return locations[citySlug] || {};
 }
 
