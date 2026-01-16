@@ -133,7 +133,7 @@ export async function calculateDrivingRoute(
   const AMap = await loadAMap();
 
   return new Promise((resolve, reject) => {
-    AMap.plugin('AMap.Driving', () => {
+    AMap.plugin(['AMap.Driving'], () => {
       const driving = new AMap.Driving({
         policy: AMap.DrivingPolicy.LEAST_TIME,
       });
@@ -172,7 +172,7 @@ export async function calculateWalkingRoute(
   const AMap = await loadAMap();
 
   return new Promise((resolve, reject) => {
-    AMap.plugin('AMap.Walking', () => {
+    AMap.plugin(['AMap.Walking'], () => {
       const walking = new AMap.Walking();
 
       walking.search(start, end, (status: string, result: any) => {
