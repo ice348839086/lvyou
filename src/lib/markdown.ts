@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import type { Guide, GuideMetadata } from '@/types/guide';
 
 // 攻略数据目录
-const guidesDirectory = path.join(process.cwd(), '..', 'travel-guides', 'guides');
+const guidesDirectory = path.join(process.cwd(), 'public', 'guides');
 
 /**
  * 获取所有城市的slug列表
