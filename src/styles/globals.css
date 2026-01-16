@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* 自定义样式 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+}
+
+/* 限制文本行数 */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Markdown内容样式 */
+.markdown-content {
+  @apply text-gray-800 leading-relaxed;
+}
+
+.markdown-content h1 {
+  @apply text-3xl font-bold mt-8 mb-4 text-gray-900;
+}
+
+.markdown-content h2 {
+  @apply text-2xl font-bold mt-6 mb-3 text-gray-900 border-b-2 border-gray-200 pb-2;
+}
+
+.markdown-content h3 {
+  @apply text-xl font-bold mt-4 mb-2 text-gray-900;
+}
+
+.markdown-content p {
+  @apply mb-4;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply mb-4 pl-6;
+}
+
+.markdown-content li {
+  @apply mb-2;
+}
+
+.markdown-content table {
+  @apply w-full border-collapse mb-4 text-sm;
+}
+
+.markdown-content th {
+  @apply bg-gray-100 border border-gray-300 px-4 py-2 text-left font-semibold;
+}
+
+.markdown-content td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-blue-50 italic;
+}
+
+.markdown-content code {
+  @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+}
+
+.markdown-content pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.markdown-content a {
+  @apply text-blue-600 hover:text-blue-800 underline;
+}
+
+.markdown-content img {
+  @apply max-w-full h-auto rounded-lg shadow-md my-4;
+}
+
+/* 加载动画 */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

@@ -1,0 +1,61 @@
+{
+  "beijing": {
+    "天安门广场": { "lat": 39.9075, "lng": 116.3972, "type": "attraction" },
+    "故宫": { "lat": 39.9163, "lng": 116.3972, "type": "attraction" },
+    "景山公园": { "lat": 39.9254, "lng": 116.3944, "type": "attraction" },
+    "天坛": { "lat": 39.8828, "lng": 116.4068, "type": "attraction" },
+    "颐和园": { "lat": 40.0005, "lng": 116.2753, "type": "attraction" },
+    "圆明园": { "lat": 40.0076, "lng": 116.2955, "type": "attraction" },
+    "八达岭长城": { "lat": 40.3593, "lng": 116.0153, "type": "attraction" },
+    "鸟巢": { "lat": 39.9928, "lng": 116.3903, "type": "attraction" },
+    "水立方": { "lat": 39.9930, "lng": 116.3886, "type": "attraction" },
+    "北海公园": { "lat": 39.9262, "lng": 116.3868, "type": "attraction" },
+    "雍和宫": { "lat": 39.9478, "lng": 116.4187, "type": "attraction" },
+    "国子监": { "lat": 39.9476, "lng": 116.4147, "type": "attraction" },
+    "恭王府": { "lat": 39.9383, "lng": 116.3828, "type": "attraction" },
+    "南锣鼓巷": { "lat": 39.9369, "lng": 116.4032, "type": "attraction" },
+    "什刹海": { "lat": 39.9394, "lng": 116.3858, "type": "attraction" },
+    "国家博物馆": { "lat": 39.9033, "lng": 116.3978, "type": "attraction" },
+    "清华大学": { "lat": 40.0010, "lng": 116.3260, "type": "attraction" },
+    "北京大学": { "lat": 39.9925, "lng": 116.3059, "type": "attraction" },
+    "王府井": { "lat": 39.9141, "lng": 116.4074, "type": "attraction" },
+    "庆丰包子铺": { "lat": 39.9141, "lng": 116.4074, "type": "restaurant" },
+    "四季民福烤鸭店": { "lat": 39.9180, "lng": 116.3950, "type": "restaurant" },
+    "南门涮肉": { "lat": 39.9928, "lng": 116.3903, "type": "restaurant" },
+    "护国寺小吃": { "lat": 39.9336, "lng": 116.3683, "type": "restaurant" },
+    "东来顺": { "lat": 39.9141, "lng": 116.4074, "type": "restaurant" },
+    "全聚德": { "lat": 39.8828, "lng": 116.4068, "type": "restaurant" }
+  },
+  "shanghai": {
+    "外滩": { "lat": 31.2397, "lng": 121.4900, "type": "attraction" },
+    "东方明珠": { "lat": 31.2397, "lng": 121.4995, "type": "attraction" },
+    "豫园": { "lat": 31.2283, "lng": 121.4922, "type": "attraction" },
+    "南京路": { "lat": 31.2342, "lng": 121.4759, "type": "attraction" },
+    "田子坊": { "lat": 31.2109, "lng": 121.4660, "type": "attraction" },
+    "新天地": { "lat": 31.2202, "lng": 121.4757, "type": "attraction" }
+  },
+  "hangzhou": {
+    "西湖": { "lat": 30.2503, "lng": 120.1480, "type": "attraction" },
+    "灵隐寺": { "lat": 30.2426, "lng": 120.0968, "type": "attraction" },
+    "雷峰塔": { "lat": 30.2314, "lng": 120.1489, "type": "attraction" },
+    "西溪湿地": { "lat": 30.2708, "lng": 120.0550, "type": "attraction" }
+  },
+  "suzhou": {
+    "拙政园": { "lat": 31.3234, "lng": 120.6300, "type": "attraction" },
+    "虎丘": { "lat": 31.3289, "lng": 120.5954, "type": "attraction" },
+    "狮子林": { "lat": 31.3261, "lng": 120.6288, "type": "attraction" },
+    "寒山寺": { "lat": 31.3118, "lng": 120.5589, "type": "attraction" }
+  },
+  "xian": {
+    "兵马俑": { "lat": 34.3848, "lng": 109.2789, "type": "attraction" },
+    "大雁塔": { "lat": 34.2196, "lng": 108.9645, "type": "attraction" },
+    "钟楼": { "lat": 34.2583, "lng": 108.9486, "type": "attraction" },
+    "城墙": { "lat": 34.2656, "lng": 108.9458, "type": "attraction" }
+  },
+  "chengdu": {
+    "大熊猫繁育研究基地": { "lat": 30.7352, "lng": 104.1507, "type": "attraction" },
+    "宽窄巷子": { "lat": 30.6727, "lng": 104.0559, "type": "attraction" },
+    "锦里": { "lat": 30.6441, "lng": 104.0532, "type": "attraction" },
+    "武侯祠": { "lat": 30.6443, "lng": 104.0495, "type": "attraction" }
+  }
+}
