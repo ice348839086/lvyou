@@ -54,10 +54,51 @@ export async function createMap(
     zoom: options.zoom || 12,
     center: options.center || [116.397428, 39.90923],
     viewMode: '2D',
-    mapStyle: 'amap://styles/normal',
+    // 使用清新蓝主题
+    mapStyle: 'amap://styles/fresh',
+    features: ['bg', 'road', 'building', 'point'],
   });
 
   return map;
+}
+
+/**
+ * 获取自定义标记图标
+ */
+function getMarkerIcon(type: string): string {
+  const icons: { [key: string]: { emoji: string; color: string } } = {
+    attraction: { emoji: '🏛️', color: '#3b82f6' }, // 蓝色
+    restaurant: { emoji: '🍜', color: '#f97316' }, // 橙色
+    hotel: { emoji: '🏨', color: '#10b981' }, // 绿色
+    transport: { emoji: '🚕', color: '#6b7280' }, // 灰色
+  };
+
+  const config = icons[type] || icons.attraction;
+
+  // 创建自定义HTML标记
+  return `
+    <div style="
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border: 3px solid ${config.color};
+      border-radius: 50% 50% 50% 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: rotate(-45deg);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    ">
+      <span style="
+        font-size: 20px;
+        transform: rotate(45deg);
+        user-select: none;
+      ">${config.emoji}</span>
+    </div>
+  `;
 }
 
 /**
@@ -70,27 +111,40 @@ export async function addMarker(
     title?: string;
     content?: string;
     icon?: string;
+    type?: string;
   } = {}
 ): Promise<any> {
   const AMap = await loadAMap();
+
+  // 创建自定义图标
+  const iconHtml = getMarkerIcon(options.type || 'attraction');
 
   const marker = new AMap.Marker({
     position,
     title: options.title || '',
     map,
+    content: iconHtml,
+    offset: new AMap.Pixel(-20, -40),
+    anchor: 'bottom-center',
   });
 
   // 如果有内容,添加点击事件显示信息窗体
   if (options.content) {
     const infoWindow = new AMap.InfoWindow({
       content: options.content,
-      offset: new AMap.Pixel(0, -30),
+      offset: new AMap.Pixel(0, -40),
+      anchor: 'bottom-center',
     });
 
     marker.on('click', () => {
       infoWindow.open(map, position);
     });
   }
+
+  // 添加hover效果
+  marker.on('mouseover', () => {
+    marker.setTop(true);
+  });
 
   return marker;
 }
@@ -112,7 +166,11 @@ export async function drawPolyline(
     path,
     strokeColor: options.strokeColor || '#3b82f6',
     strokeWeight: options.strokeWeight || 5,
-    strokeOpacity: 0.8,
+    strokeOpacity: 0.9,
+    strokeStyle: 'solid',
+    lineJoin: 'round',
+    lineCap: 'round',
+    showDir: true, // 显示方向箭头
     map,
   });
 

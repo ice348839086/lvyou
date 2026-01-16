@@ -8,9 +8,10 @@
 - 🗂️ **40+城市攻略** - 覆盖全国热门旅游目的地
 - 🔍 **智能筛选搜索** - 按地区、天数、主题快速查找
 - 📝 **Markdown渲染** - 完整展示攻略内容,支持表格、列表等
-- 🗺️ **高德地图集成** - 可视化行程路线,标注景点位置
+- 🗺️ **高德地图集成** - 可视化行程路线,自定义标记图标
 - ⏱️ **时间轴展示** - 清晰的每日行程安排
 - 🎨 **现代化UI** - 基于Tailwind CSS的精美界面
+- 🖼️ **Unsplash图片** - 自动获取城市高质量封面图（可选）
 
 ## 🛠️ 技术栈
 
@@ -66,12 +67,20 @@ npm install
 创建 `.env.local` 文件:
 
 ```env
-# 高德地图API Key
+# 高德地图API Key (必需)
+# 获取地址: https://lbs.amap.com/
 NEXT_PUBLIC_AMAP_KEY=your_amap_key_here
+
+# Unsplash API Access Key (可选)
+# 获取地址: https://unsplash.com/developers
+# 用于自动获取城市封面图片，如果不配置将使用渐变背景
+NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=your_unsplash_access_key_here
 
 # 攻略数据目录路径
 GUIDES_DATA_PATH=../travel-guides/guides
 ```
+
+**注意：** Unsplash API Key 是可选的。如果不配置，网站会自动使用渐变背景作为封面。
 
 ### 3. 启动开发服务器
 
@@ -130,7 +139,9 @@ rating: 4.8
 }
 ```
 
-## 🗺️ 高德地图配置
+## 🔑 API 配置
+
+### 高德地图 (必需)
 
 1. 访问 [高德开放平台](https://lbs.amap.com/)
 2. 注册账号并创建应用
@@ -138,13 +149,27 @@ rating: 4.8
 4. 配置域名白名单(开发环境: `localhost:3000`)
 5. 将Key添加到 `.env.local`
 
+### Unsplash 图片 (可选)
+
+1. 访问 [Unsplash Developers](https://unsplash.com/developers)
+2. 注册账号并创建新应用
+3. 获取 Access Key
+4. 将Key添加到 `.env.local`
+
+**功能说明：**
+- 自动从 Unsplash 获取城市相关的高质量图片
+- 免费版限制：每小时 50 次请求
+- 如果不配置，会自动降级到渐变背景或本地图片
+
 ## 📦 部署
 
 ### Vercel (推荐)
 
 1. 将代码推送到GitHub
 2. 在Vercel中导入项目
-3. 配置环境变量 `NEXT_PUBLIC_AMAP_KEY`
+3. 配置环境变量：
+   - `NEXT_PUBLIC_AMAP_KEY` (必需)
+   - `NEXT_PUBLIC_UNSPLASH_ACCESS_KEY` (可选)
 4. 自动部署完成
 
 ### 其他平台
@@ -182,8 +207,15 @@ npm run build
 
 - 攻略数据来源: 小红书MCP
 - 地图服务: 高德地图
+- 图片服务: Unsplash
 - UI框架: Tailwind CSS
 - 图标: Heroicons
+
+## 📖 更多文档
+
+- [UI升级指南](./UI_UPGRADE_GUIDE.md) - 详细的UI升级说明和配置指南
+- [快速启动指南](./QUICK_START.md) - 项目启动步骤
+- [项目总结](./PROJECT_SUMMARY.md) - 完整的项目功能清单
 
 ---
 

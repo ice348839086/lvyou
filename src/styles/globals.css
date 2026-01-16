@@ -5,6 +5,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
     'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 限制文本行数 */
@@ -36,21 +38,23 @@ html {
 
 /* 自定义滚动条 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f8fafc;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+  border-radius: 10px;
+  border: 2px solid #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: linear-gradient(180deg, #2563eb, #7c3aed);
 }
 
 /* Markdown内容样式 */
@@ -59,15 +63,15 @@ html {
 }
 
 .markdown-content h1 {
-  @apply text-3xl font-bold mt-8 mb-4 text-gray-900;
+  @apply text-3xl font-bold mt-8 mb-6 text-gray-900 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
 }
 
 .markdown-content h2 {
-  @apply text-2xl font-bold mt-6 mb-3 text-gray-900 border-b-2 border-gray-200 pb-2;
+  @apply text-2xl font-bold mt-8 mb-4 text-gray-900 border-b-2 border-gradient-to-r from-blue-400 to-purple-400 pb-3;
 }
 
 .markdown-content h3 {
-  @apply text-xl font-bold mt-4 mb-2 text-gray-900;
+  @apply text-xl font-bold mt-6 mb-3 text-gray-900;
 }
 
 .markdown-content p {
@@ -84,19 +88,19 @@ html {
 }
 
 .markdown-content table {
-  @apply w-full border-collapse mb-4 text-sm;
+  @apply w-full border-collapse mb-6 text-sm shadow-md rounded-lg overflow-hidden;
 }
 
 .markdown-content th {
-  @apply bg-gray-100 border border-gray-300 px-4 py-2 text-left font-semibold;
+  @apply bg-gradient-to-r from-blue-50 to-purple-50 border border-gray-200 px-4 py-3 text-left font-bold text-gray-800;
 }
 
 .markdown-content td {
-  @apply border border-gray-300 px-4 py-2;
+  @apply border border-gray-200 px-4 py-3 bg-white;
 }
 
 .markdown-content blockquote {
-  @apply border-l-4 border-blue-500 pl-4 py-2 mb-4 bg-blue-50 italic;
+  @apply border-l-4 border-blue-500 pl-6 py-3 mb-6 bg-gradient-to-r from-blue-50 to-purple-50 italic rounded-r-xl shadow-sm;
 }
 
 .markdown-content code {
@@ -116,7 +120,13 @@ html {
 }
 
 .markdown-content img {
-  @apply max-w-full h-auto rounded-lg shadow-md my-4;
+  @apply max-w-full h-auto rounded-2xl shadow-xl my-6 border border-gray-100;
+}
+
+/* 自定义地图标记悬停效果 */
+.custom-marker:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
 }
 
 /* 加载动画 */

@@ -63,14 +63,14 @@ export default function ItineraryPage({
         />
       </Head>
 
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50">
         {/* 顶部导航 */}
-        <nav className="bg-white shadow-sm sticky top-0 z-50">
+        <nav className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <Link
                 href={`/guides/${guide.slug}`}
-                className="flex items-center text-blue-600 hover:text-blue-800 font-medium"
+                className="flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -90,35 +90,39 @@ export default function ItineraryPage({
 
               <Link
                 href="/"
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
               >
-                首页
+                🏠 首页
               </Link>
             </div>
           </div>
         </nav>
 
         {/* 头部 */}
-        <header className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-          <div className="container mx-auto px-4 py-8">
-            <h1 className="text-2xl md:text-3xl font-bold mb-2">
-              {guide.metadata.title}
+        <header className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-1/3 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          </div>
+          <div className="container mx-auto px-4 py-12 relative z-10">
+            <h1 className="text-2xl md:text-4xl font-bold mb-3">
+              🗺️ {guide.metadata.title}
             </h1>
-            <p className="text-blue-100">
+            <p className="text-blue-50 text-lg font-medium">
               行程总览 · 时间轴 + 地图双视图
             </p>
           </div>
         </header>
 
         {/* 内容区 - 双视图布局 */}
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-10">
           {/* 桌面端:左右分栏 | 移动端:上下堆叠 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* 左侧:时间轴 */}
             <div id="timeline-section" className="order-2 lg:order-1">
               <div className="sticky top-20">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  📅 行程时间轴
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <span className="text-3xl">📅</span>
+                  <span>行程时间轴</span>
                 </h2>
                 {itinerary.length > 0 ? (
                   <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
@@ -146,10 +150,11 @@ export default function ItineraryPage({
             {/* 右侧:地图 */}
             <div id="map-section" className="order-1 lg:order-2">
               <div className="sticky top-20">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  🗺️ 路线地图
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <span className="text-3xl">🗺️</span>
+                  <span>路线地图</span>
                 </h2>
-                <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
                   {locations.length > 0 ? (
                     <div className="h-[500px] lg:h-[calc(100vh-200px)]">
                       <MapView
@@ -183,26 +188,26 @@ export default function ItineraryPage({
 
                 {/* 图例 */}
                 {locations.length > 0 && (
-                  <div className="mt-4 bg-white rounded-lg shadow-md p-4">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                      图例
+                  <div className="mt-6 bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg p-5 border border-gray-100">
+                    <h3 className="text-base font-bold text-gray-800 mb-4">
+                      📌 图例说明
                     </h3>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div className="flex items-center">
-                        <span className="mr-2">🏛️</span>
-                        <span className="text-gray-600">景点</span>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="flex items-center gap-2 bg-blue-50 px-3 py-2 rounded-xl border border-blue-100">
+                        <span className="text-xl">🏛️</span>
+                        <span className="text-gray-700 font-medium">景点</span>
                       </div>
-                      <div className="flex items-center">
-                        <span className="mr-2">🍜</span>
-                        <span className="text-gray-600">餐厅</span>
+                      <div className="flex items-center gap-2 bg-orange-50 px-3 py-2 rounded-xl border border-orange-100">
+                        <span className="text-xl">🍜</span>
+                        <span className="text-gray-700 font-medium">餐厅</span>
                       </div>
-                      <div className="flex items-center">
-                        <span className="mr-2">🏨</span>
-                        <span className="text-gray-600">酒店</span>
+                      <div className="flex items-center gap-2 bg-green-50 px-3 py-2 rounded-xl border border-green-100">
+                        <span className="text-xl">🏨</span>
+                        <span className="text-gray-700 font-medium">酒店</span>
                       </div>
-                      <div className="flex items-center">
-                        <span className="mr-2">🚕</span>
-                        <span className="text-gray-600">交通</span>
+                      <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-xl border border-gray-200">
+                        <span className="text-xl">🚕</span>
+                        <span className="text-gray-700 font-medium">交通</span>
                       </div>
                     </div>
                   </div>
@@ -213,10 +218,13 @@ export default function ItineraryPage({
         </div>
 
         {/* 页脚 */}
-        <footer className="bg-gray-800 text-white mt-16">
-          <div className="container mx-auto px-4 py-8 text-center">
-            <p className="text-gray-400">
+        <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white mt-20">
+          <div className="container mx-auto px-4 py-10 text-center">
+            <p className="text-gray-300 text-sm font-medium">
               © 2026 智旅攻略 · 基于小红书MCP自动抓取 + AI整理
+            </p>
+            <p className="text-gray-500 text-xs mt-2">
+              让每一次旅行都成为美好回忆 ✨
             </p>
           </div>
         </footer>
