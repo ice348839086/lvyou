@@ -6,6 +6,10 @@ export interface AMapInstance {
   Marker: any;
   Polyline: any;
   InfoWindow: any;
+  Pixel: any;
+  Driving: any;
+  Walking: any;
+  DrivingPolicy: any;
   plugin: (plugins: string[], callback: () => void) => void;
 }
 
