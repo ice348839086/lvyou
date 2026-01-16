@@ -22,13 +22,17 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             <a target="_blank" rel="noopener noreferrer" {...props} />
           ),
           // 自定义代码块
-          code: ({ node, inline, ...props }) => {
-            if (inline) {
-              return <code {...props} />;
+          code: ({ node, className, children, ...props }) => {
+            // 检查是否是内联代码
+            const isInline = !className || !className.includes('language-');
+            
+            if (isInline) {
+              return <code className={className} {...props}>{children}</code>;
             }
+            
             return (
-              <pre>
-                <code {...props} />
+              <pre className={className}>
+                <code {...props}>{children}</code>
               </pre>
             );
           },
