@@ -2,28 +2,74 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Guide } from '@/types/guide';
-import { searchCityImage, generateGradientBackground } from '@/lib/unsplash';
+import { generateGradientBackground } from '@/lib/unsplash';
 
 interface GuideCardProps {
   guide: Guide;
 }
 
+// 本地存储缓存键
+const CACHE_KEY_PREFIX = 'unsplash_img_';
+const CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 7天
+
 export default function GuideCard({ guide }: GuideCardProps) {
   const { slug, metadata } = guide;
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [imageError, setImageError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // 如果 cover 以 "unsplash:" 开头，动态获取图片
     if (metadata.cover.startsWith('unsplash:')) {
       const cityName = metadata.cover.replace('unsplash:', '');
-      searchCityImage(cityName).then((url) => {
-        if (url) {
-          setImageUrl(url);
-        } else {
-          setImageError(true);
+      
+      // 检查 localStorage 缓存
+      const cacheKey = CACHE_KEY_PREFIX + cityName;
+      try {
+        const cached = localStorage.getItem(cacheKey);
+        if (cached) {
+          const { url, timestamp } = JSON.parse(cached);
+          if (Date.now() - timestamp < CACHE_DURATION) {
+            setImageUrl(url);
+            return;
+          }
         }
-      });
+      } catch (error) {
+        console.error('Cache read error:', error);
+      }
+
+      // 从 API 获取图片
+      setIsLoading(true);
+      fetch(`/api/unsplash?city=${encodeURIComponent(cityName)}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`API error: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (data.url) {
+            setImageUrl(data.url);
+            // 缓存到 localStorage
+            try {
+              localStorage.setItem(
+                cacheKey,
+                JSON.stringify({ url: data.url, timestamp: Date.now() })
+              );
+            } catch (error) {
+              console.error('Cache write error:', error);
+            }
+          } else {
+            setImageError(true);
+          }
+        })
+        .catch((error) => {
+          console.error(`Failed to fetch image for ${cityName}:`, error);
+          setImageError(true);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
       setImageUrl(metadata.cover);
     }
@@ -49,6 +95,12 @@ export default function GuideCard({ guide }: GuideCardProps) {
               setImageError(true);
             }}
           />
+        )}
+        {/* 加载动画 */}
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+          </div>
         )}
         {/* 渐变遮罩 */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
