@@ -115,11 +115,11 @@ export default async function handler(
         });
 
         if (!response.ok) {
-          if (response.status === 403) {
-            console.warn('Unsplash API rate limit reached');
+          if (response.status === 403 || response.status === 429) {
+            console.warn('Unsplash API rate limit reached (403/429)');
             return res.status(429).json({ 
               error: 'Rate limit reached', 
-              message: 'Please try again later' 
+              message: 'API quota exceeded. Using gradient backgrounds.' 
             });
           }
           continue;

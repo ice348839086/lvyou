@@ -38,17 +38,23 @@ export default function GuideCard({ guide }: GuideCardProps) {
         console.error('Cache read error:', error);
       }
 
-      // 从 API 获取图片
+      // 从 API 获取图片（带速率限制处理）
       setIsLoading(true);
       fetch(`/api/unsplash?city=${encodeURIComponent(cityName)}`)
         .then((res) => {
+          if (res.status === 429) {
+            // 速率限制：静默失败，使用渐变背景
+            console.warn(`⚠️ API rate limit reached for ${cityName}, using gradient`);
+            setImageError(true);
+            return null;
+          }
           if (!res.ok) {
             throw new Error(`API error: ${res.status}`);
           }
           return res.json();
         })
         .then((data) => {
-          if (data.url) {
+          if (data?.url) {
             setImageUrl(data.url);
             // 缓存到 localStorage
             try {
@@ -59,7 +65,7 @@ export default function GuideCard({ guide }: GuideCardProps) {
             } catch (error) {
               console.error('Cache write error:', error);
             }
-          } else {
+          } else if (data !== null) {
             setImageError(true);
           }
         })
@@ -83,7 +89,7 @@ export default function GuideCard({ guide }: GuideCardProps) {
       className="group block bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1"
     >
       {/* 封面图 */}
-      <div className={`relative h-48 bg-gradient-to-br ${gradientClass}`}>
+      <div className={`relative h-48 bg-gradient-to-br ${gradientClass} overflow-hidden`}>
         {imageUrl && !imageError && (
           <Image
             src={imageUrl}
@@ -96,9 +102,17 @@ export default function GuideCard({ guide }: GuideCardProps) {
             }}
           />
         )}
+        {/* 渐变背景装饰（当没有图片时） */}
+        {(imageError || (!imageUrl && !isLoading)) && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-white/90 text-6xl font-bold opacity-20">
+              {metadata.title.substring(0, 2)}
+            </div>
+          </div>
+        )}
         {/* 加载动画 */}
         {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center bg-black/10">
             <div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin" />
           </div>
         )}
