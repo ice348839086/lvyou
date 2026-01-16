@@ -30,6 +30,38 @@ interface UnsplashSearchResponse {
 // 图片缓存（内存缓存，避免重复请求）
 const imageCache = new Map<string, string>();
 
+// 城市英文名映射（提高搜索成功率）
+const cityEnglishNames: Record<string, string> = {
+  '北京': 'Beijing',
+  '上海': 'Shanghai',
+  '杭州': 'Hangzhou',
+  '苏州': 'Suzhou',
+  '成都': 'Chengdu',
+  '西安': 'Xian',
+  '重庆': 'Chongqing',
+  '厦门': 'Xiamen',
+  '青岛': 'Qingdao',
+  '南京': 'Nanjing',
+  '三亚': 'Sanya',
+  '桂林': 'Guilin',
+  '张家界': 'Zhangjiajie',
+  '黄山': 'Huangshan',
+  '乌镇': 'Wuzhen',
+  '周庄': 'Zhouzhuang',
+  '西塘': 'Xitang',
+  '云南': 'Yunnan',
+  '无锡': 'Wuxi',
+  '扬州': 'Yangzhou',
+  '同里': 'Tongli',
+  '南浔': 'Nanxun',
+  '锦溪': 'Jinxi',
+  '安昌': 'Anchang',
+  '朱家角': 'Zhujiajiao',
+  '莫干山': 'Moganshan',
+  '千岛湖': 'Qiandao Lake',
+  '安吉': 'Anji',
+};
+
 /**
  * 从 Unsplash 搜索城市图片
  */
@@ -50,37 +82,51 @@ export async function searchCityImage(
   }
 
   try {
-    // 构建搜索查询（中文城市名 + travel/景点等关键词）
-    const query = `${cityName} travel landscape china`;
-    const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
-      query
-    )}&per_page=1&orientation=landscape&client_id=${key}`;
+    // 获取英文名（如果有）
+    const englishName = cityEnglishNames[cityName] || cityName;
+    
+    // 尝试多个搜索策略
+    const searchQueries = [
+      `${englishName} China travel`,          // 策略1: 英文名 + China
+      `${cityName} China landscape`,          // 策略2: 中文名 + China
+      `${englishName} scenic`,                // 策略3: 英文名 + scenic
+      `${englishName} tourism`,               // 策略4: 英文名 + tourism
+      `China landscape nature`,               // 策略5: 通用中国风景（最后备选）
+    ];
 
-    const response = await fetch(url, {
-      headers: {
-        'Accept-Version': 'v1',
-      },
-    });
+    for (const query of searchQueries) {
+      const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+        query
+      )}&per_page=1&orientation=landscape&client_id=${key}`;
 
-    if (!response.ok) {
-      console.error(`Unsplash API error: ${response.status}`);
-      return null;
+      const response = await fetch(url, {
+        headers: {
+          'Accept-Version': 'v1',
+        },
+      });
+
+      if (!response.ok) {
+        console.error(`Unsplash API error: ${response.status}`);
+        continue; // 尝试下一个查询
+      }
+
+      const data: UnsplashSearchResponse = await response.json();
+
+      if (data.results.length > 0) {
+        // 找到图片，使用第一张
+        const imageUrl = data.results[0].urls.regular;
+        
+        // 缓存结果
+        imageCache.set(cityName, imageUrl);
+        
+        console.log(`✅ Found image for ${cityName} using query: "${query}"`);
+        return imageUrl;
+      }
     }
 
-    const data: UnsplashSearchResponse = await response.json();
-
-    if (data.results.length === 0) {
-      console.warn(`No images found for ${cityName}`);
-      return null;
-    }
-
-    // 获取第一张图片的 regular 尺寸 URL
-    const imageUrl = data.results[0].urls.regular;
-
-    // 缓存结果
-    imageCache.set(cityName, imageUrl);
-
-    return imageUrl;
+    // 所有策略都失败
+    console.warn(`❌ No images found for ${cityName} after trying all strategies`);
+    return null;
   } catch (error) {
     console.error(`Failed to fetch image for ${cityName}:`, error);
     return null;
