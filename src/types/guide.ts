@@ -28,10 +28,17 @@ export interface Location {
   type: 'attraction' | 'restaurant' | 'hotel' | 'transport';
 }
 
+// JSON中的位置数据格式(不包含name字段)
+export interface LocationData {
+  lat: number;
+  lng: number;
+  type: 'attraction' | 'restaurant' | 'hotel' | 'transport';
+}
+
 // 城市景点数据
 export interface CityLocations {
   [citySlug: string]: {
-    [locationName: string]: Location;
+    [locationName: string]: LocationData;
   };
 }
 
