@@ -7,13 +7,8 @@ const nextConfig: NextConfig = {
   images: {
     domains: [],
     formats: ['image/webp', 'image/avif'],
+    unoptimized: true, // Vercel部署时图片优化
   },
-
-  // 性能优化
-  swcMinify: true,
-  
-  // 输出配置
-  output: 'standalone',
 
   // 环境变量
   env: {
