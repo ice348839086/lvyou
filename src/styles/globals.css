@@ -67,7 +67,7 @@ html {
 }
 
 .markdown-content h2 {
-  @apply text-2xl font-bold mt-8 mb-4 text-gray-900 border-b-2 border-gradient-to-r from-blue-400 to-purple-400 pb-3;
+  @apply text-2xl font-bold mt-8 mb-4 text-gray-900 border-b-2 border-blue-200 pb-3;
 }
 
 .markdown-content h3 {

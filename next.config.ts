@@ -5,7 +5,13 @@ const nextConfig: NextConfig = {
   
   // 图片优化配置
   images: {
-    domains: ['images.unsplash.com'], // 添加 Unsplash 域名
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+    ],
     formats: ['image/webp', 'image/avif'],
     unoptimized: true, // Vercel部署时图片优化
   },
